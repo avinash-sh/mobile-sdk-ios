@@ -58,7 +58,7 @@
 +(void)setAgeGroup:(IMSDKAgeGroup)ageGroup;
 /**
  * Provide a user's date of birth to the SDK for targetting purposes.
- * @param dateOfBirth The user's date of birth.
+ * @param yearOfBirth The user's date of birth.
  */
 +(void)setYearOfBirth:(NSInteger)yearOfBirth;
 /**
@@ -106,7 +106,7 @@
 
 /**
  * Provide the user's location to the SDK for targetting purposes.
- * @param location: The location of the user
+ * @param location The location of the user
  */
 +(void)setLocation:(CLLocation*)location;
 /**
