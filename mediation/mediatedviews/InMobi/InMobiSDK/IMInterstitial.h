@@ -16,6 +16,10 @@
  [interstitial show];
  }
  
+- (void)interstitialDidReceiveAd:(IMInterstitial *)interstitial {
+ NSLog(@"interstitialDidReceiveAd");
+ }
+ 
  - (void)interstitial:(IMInterstitial *)interstitial didFailToLoadWithError:(IMRequestStatus *)error {
  NSLog(@"Interstitial failed to load ad");
  NSLog(@"Error : %@",error.description);
@@ -91,12 +95,12 @@ typedef NS_ENUM(NSInteger, IMInterstitialAnimationType) {
 -(BOOL)isReady;
 /**
  * Displays the interstitial on the screen
- * @param view controller, this view controller will be used to present interestitial.
+ * @param viewController, this view controller will be used to present interestitial.
  */
 -(void)showFromViewController:(UIViewController *)viewController;
 /**
  * Displays the interstitial on the screen
- * @param view controller, this view controller will be used to present interestitial.
+ * @param viewController, this view controller will be used to present interestitial.
  * @param type The transition type for interstitial presentation.
  */
 -(void)showFromViewController:(UIViewController *)viewController withAnimation:(IMInterstitialAnimationType)type;

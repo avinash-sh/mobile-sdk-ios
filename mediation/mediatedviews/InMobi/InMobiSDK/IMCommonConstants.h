@@ -51,7 +51,7 @@ typedef NS_ENUM (NSInteger, IMSDKEthnicity) {
 
 typedef NS_ENUM(NSInteger, IMSDKHouseholdIncome) {
     kIMSDKHouseholdIncomeBelow5kUSD = 1,
-    kIMSDKHouseholdIncomeBetweek5kAnd10kUSD,
+    kIMSDKHouseholdIncomeBetween5kAnd10kUSD,
     kIMSDKHouseholdIncomeBetween10kAnd15kUSD,
     kIMSDKHouseholdIncomeBetween15kAnd20kUSD,
     kIMSDKHouseholdIncomeBetween20kAnd25kUSD,
@@ -63,11 +63,13 @@ typedef NS_ENUM(NSInteger, IMSDKHouseholdIncome) {
 };
 typedef NS_ENUM(NSInteger, IMSDKAgeGroup) {
     kIMSDKAgeGroupBelow18 = 1,
-    kIMSDKAgeGroupBetween18And20,
-    kIMSDKAgeGroupBetween21And24,
-    kIMSDKAgeGroupBetween25And34,
-    kIMSDKAgeGroupBetween35And54,
-    kIMSDKAgeGroupAbove55
+    kIMSDKAgeGroupBetween18And24,
+    kIMSDKAgeGroupBetween25And29,
+    kIMSDKAgeGroupBetween30And34,
+    kIMSDKAgeGroupBetween35And44,
+    kIMSDKAgeGroupBetween45And54,
+    kIMSDKAgeGroupBetween55And65,
+    kIMSDKAgeGroupAbove65
 };
 
 #endif

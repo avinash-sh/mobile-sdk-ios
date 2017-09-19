@@ -107,34 +107,19 @@ static NSString *kANAdAdapterNativeInMobiLandingURLKey = @"landingURL";
 
 - (void)registerViewForImpressionTracking:(UIView *)view {
     ANLogTrace(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    [IMNative bindNative:self.nativeAd
-                  toView:view];
     self.boundView = view;
     self.expired = YES;
 }
 
 - (void)handleClickFromRootViewController:(UIViewController *)rvc {
     ANLogTrace(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    id landingPageURLValue = self.nativeContent[kANAdAdapterNativeInMobiLandingURLKey];
-    if ([landingPageURLValue isKindOfClass:[NSString class]]) {
-        NSString *landingPageURLString = (NSString *)landingPageURLValue;
-        [self.nativeAdDelegate adWasClicked];
-        [self.nativeAd reportAdClick:nil];
-        NSURL *landingPageURL = [NSURL URLWithString:landingPageURLString];
-        if (landingPageURL) {
-            [self.nativeAdDelegate willLeaveApplication];
-            [[UIApplication sharedApplication] openURL:landingPageURL];
-        }
-    } else {
-        ANLogDebug(@"InMobi ad was clicked, but adapter was unable to find landing url –– Ignoring request to handle click.");
-    }
+    [self.nativeAdDelegate adWasClicked];
+    [self.nativeAdDelegate willLeaveApplication];
+    [self.nativeAd reportAdClickAndOpenLandingPage];
 }
 
 - (void)unregisterViewFromTracking {
     ANLogTrace(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    if (self.boundView) {
-        [IMNative unBindView:self.boundView];
-    }
     self.nativeAd.delegate = nil;
     self.nativeAd = nil;
 }
@@ -143,7 +128,7 @@ static NSString *kANAdAdapterNativeInMobiLandingURLKey = @"landingURL";
 
 - (void)nativeDidFinishLoading:(IMNative *)native {
     ANLogTrace(@"%@ %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-    NSDictionary *nativeContent = [[self class] nativeContentFromContentString:native.adContent];
+    NSDictionary *nativeContent = [[self class] nativeContentFromContentString:native.customAdContent];
     if (!nativeContent) {
         [self.requestDelegate didFailToLoadNativeAd:ANAdResponseInternalError];
         return;
@@ -208,17 +193,17 @@ static NSString *kANAdAdapterNativeInMobiLandingURLKey = @"landingURL";
                                                                                            networkCode:ANNativeAdNetworkCodeInMobi];
     adResponse.customElements = nativeContent;
     
-    id titleValue = nativeContent[kANAdAdapterNativeInMobiTitleKey];
+    id titleValue = [self.nativeAd adTitle];
     if ([titleValue isKindOfClass:[NSString class]]) {
         adResponse.title = (NSString *)titleValue;
     }
     
-    id bodyValue = nativeContent[kANAdAdapterNativeInMobiDescriptionKey];
+    id bodyValue = [self.nativeAd adDescription];
     if ([bodyValue isKindOfClass:[NSString class]]) {
         adResponse.body = (NSString *)bodyValue;
     }
     
-    id ctaValue = [nativeContent valueForKey:kANAdAdapterNativeInMobiCTAKey];
+    id ctaValue = [self.nativeAd adCtaText];
     if ([ctaValue isKindOfClass:[NSString class]]) {
         adResponse.callToAction = (NSString *)ctaValue;
     }

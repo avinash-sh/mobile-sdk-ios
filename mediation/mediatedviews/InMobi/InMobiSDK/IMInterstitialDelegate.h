@@ -32,7 +32,12 @@
 @protocol IMInterstitialDelegate <NSObject>
 @optional
 /**
- * Notifies the delegate that the interstitial has finished loading
+ * Notifies the delegate that the ad server has returned an ad. Assets are not yet available.
+ * Please use interstitialDidFinishLoading: to receive a callback when assets are also available.
+ */
+-(void)interstitialDidReceiveAd:(IMInterstitial *)interstitial;
+/**
+ * Notifies the delegate that the interstitial has finished loading and can be shown instantly.
  */
 -(void)interstitialDidFinishLoading:(IMInterstitial*)interstitial;
 /**
